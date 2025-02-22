@@ -6,6 +6,8 @@ services:
     ports:
       - "443:443"
       - "80:80" # This is needed, because the french apes writing the subjects couldn't peel a banana if their life depended on it
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
     depends_on:
       - wordpress
     # healthcheck:
