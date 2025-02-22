@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  nginx:
+    build: .
+    ports:
+      - "443:443"
+      - "80:80" # This is needed, because the french apes writing the subjects couldn't 
+    depends_on:
+      - wordpress
+    # healthcheck:
