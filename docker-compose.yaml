@@ -7,8 +7,23 @@ services:
     ports:
       - "443:443"
       - "80:80" # This is needed, because the french apes writing the subjects couldn't peel a banana if their life depended on it
+
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
     depends_on:
       - wordpress
+    networks:
+      - inception
     # healthcheck:
+
+  wordpress:
+    container_name: wordpress
+    build: ./srcs/requirements/wordpress
+    networks:
+      - inception
+    # expose:    # Documentation says this is unneccessary, services on the same network can already communicate with docker compose
+    #   - "9000"
+
+networks:
+  inception:
+    driver: bridge
