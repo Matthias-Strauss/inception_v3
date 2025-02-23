@@ -1,22 +1,24 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Dockerfile.template                                :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/22 17:16:04 by mstrauss          #+#    #+#              #
-#    Updated: 2025/02/23 11:48:55 by mstrauss         ###   ########.fr        #
+#    Created: 2025/02/23 11:59:04 by mstrauss          #+#    #+#              #
+#    Updated: 2025/02/23 12:01:01 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-up:
-	docker compose build && docker compose up
-	
-re:
-	docker compose build --no-cache && docker compose up
+FROM debian:bullseye
 
-down:
-	docker compose down
+RUN apt-get update && apt-get install -y \
+    <package> \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-.PHONY: up re down
+WORKDIR <working_directory>
+
+COPY <source> <destination>
+
+CMD ["<command>"]
