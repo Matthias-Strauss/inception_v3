@@ -4,10 +4,12 @@ services:
   nginx:
     container_name: nginx
     build: ./srcs/requirements/nginx
+    # depends_on:
+    #   - serviceName
+    restart: always
     ports:
       - "443:443"
       - "80:80" # This is needed, because the french apes writing the subjects couldn't peel a banana if their life depended on it
-
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
     depends_on:
@@ -19,11 +21,40 @@ services:
   wordpress:
     container_name: wordpress
     build: ./srcs/requirements/wordpress
+    depends_on:
+      - mariadb
+    restart: always
+    expose:
+      - "9000"
+    environment:
+      WORDPRESS_DB_HOST: 
+      WORDPRESS_DB_USER: 
+      WORDPRESS_DB_PASSWORD: 
+      WORDPRESS_DB_NAME: 
     networks:
       - inception
     # expose:    # Documentation says this is unneccessary, services on the same network can already communicate with docker compose
     #   - "9000"
+    volumes:
+      - db:/var/lib/mysql
+      - wordpress:/var/www/html
+
+  mariadb:
+    container_name: mariadb
+    build: ./srcs/requirements/mariadb
+    restart: always
+    expose:
+      - "3306"
+    # environment:
+    networks:
+      - inception
+    volumes:
+      - db:/var/lib/mysql # check path and if needed
 
 networks:
   inception:
     driver: bridge
+
+volumes:
+  db:
+  wordpress:
