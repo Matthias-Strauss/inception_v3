@@ -6,7 +6,7 @@
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/23 17:19:04 by mstrauss          #+#    #+#              #
-#    Updated: 2025/02/24 14:42:44 by mstrauss         ###   ########.fr        #
+#    Updated: 2025/02/24 16:27:17 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,13 @@ RUN apt-get update && \
     && apt-get clean
 
 # WORKDIR
+
+# Directories and Permissions
+RUN mkdir -p /var/run/mysqld && \
+    chown -R mysql:mysql /var/run/mysqld && \
+    chmod 777 /var/run/mysqld && \
+    mkdir -p /var/lib/mysql && \
+    chown -R mysql:mysql /var/lib/mysql
 
 #check if neccessary
 VOLUME /var/lib/mysql

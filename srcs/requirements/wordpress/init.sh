@@ -1,28 +1,26 @@
+#!/bin/bash
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Dockerfile.template                                :+:      :+:    :+:    #
+#    init.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/23 11:59:04 by mstrauss          #+#    #+#              #
-#    Updated: 2025/02/24 17:20:34 by mstrauss         ###   ########.fr        #
+#    Created: 2025/02/24 18:04:35 by mstrauss          #+#    #+#              #
+#    Updated: 2025/02/24 18:04:35 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:bullseye
+set -e
 
-RUN apt-get update && apt-get install -y \
-    <package> \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+DB_NAME=$(cat /run/secrets/db_name)
+DB_USER=$(cat /run/secrets/db_user)
+DB_PASS=$(cat /run/secrets/db_pass)
+DB_HOST=${WORDPRESS_DB_HOST:-mariadb}
 
-WORKDIR <working_directory>
+CONFIG_FILE="/var/www/html/wp-config.php"
+# SAMPLE_FILE="/var/www/html/wp-config-sample.php"
 
-COPY <source> <destination>
 
-RUN #set permissions
 
-ENTRYPOINT [ "executable" ]
-
-CMD ["<command>"]
+exec "$@"
