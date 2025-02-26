@@ -6,7 +6,7 @@
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/23 17:19:04 by mstrauss          #+#    #+#              #
-#    Updated: 2025/02/24 16:27:17 by mstrauss         ###   ########.fr        #
+#    Updated: 2025/02/26 13:58:23 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,8 @@ EXPOSE 3306
 
 RUN
 
-COPY init.sh .
+COPY init.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/init.sh
 
-RUN chmod +x init.sh
-
-ENTRYPOINT [ "init.sh" ]
+ENTRYPOINT ["/usr/local/bin/init.sh"]
 CMD ["mysqld"]
