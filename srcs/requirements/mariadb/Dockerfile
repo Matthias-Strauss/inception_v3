@@ -6,7 +6,7 @@
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/23 17:19:04 by mstrauss          #+#    #+#              #
-#    Updated: 2025/02/26 17:40:53 by mstrauss         ###   ########.fr        #
+#    Updated: 2025/03/01 16:58:31 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-RUN sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf && \
+    sed -i 's/^#port/port/' /etc/mysql/mariadb.conf.d/50-server.cnf && \
+    sed -i 's/^port\s*=\s*.*/port = 3306/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Directories and Permissions
 RUN mkdir -p /var/run/mysqld && \

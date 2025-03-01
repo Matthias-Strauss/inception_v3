@@ -21,14 +21,13 @@ services:
     restart: always
     ports:
       - "443:443"
-      - "80:80" # This is needed, because the french apes writing the subjects couldn't peel a banana if their life depended on it
+      # - "80:80" # Can't reroute traffix to 443 if 80 isn't open. But the people writing the subject don't know that.
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
     networks:
       - inception
     volumes:
       - wordpress:/var/www/html
-    # healthcheck:
 
   wordpress:
     container_name: wordpress
@@ -40,6 +39,7 @@ services:
       - "9000"
     environment:
       WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DEBUG: 1 #  DEBUG
     networks:
       - inception
     # expose:    # Documentation says this is unneccessary, services on the same network can already communicate with docker compose

@@ -24,28 +24,38 @@ WP_ROOT_PASS=$(cat /run/secrets/wp_root_pass)
 
 echo "Waiting for MariaDB..."
 
-while ! mysqladmin ping -h"$WORDPRESS_DB_HOST" --silent 2>/dev/null; do
-  echo "Still waiting for database at $WORDPRESS_DB_HOST..."
+until nc -z "$DB_HOST" 3306; do
+  echo "Still waiting for database at $DB_HOST..."
   sleep 3
 done
-echo "MariaDB is ready!"
+echo "MariaDB port is open!"
+echo "Waiting additional time for MariaDB to be ready..."
+sleep 5
 
-echo "Checking for wp-config.php..."
-if [ ! -f /var/www/html/wp-config.php ]; then
-    echo "Creating wp-config.php via wp-cli..."
-    wp config create \
-      --dbname="$DB_NAME" \
-      --dbuser="$DB_USER" \
-      --dbpass="$DB_PASS" \
-      --dbhost="$DB_HOST" \
-      --path="/var/www/html" \
-      --skip-check \
-      --allow-root
+if [ -f /var/www/html/wp-config.php ]; then
+    echo "Removing existing wp-config.php..."
+    rm /var/www/html/wp-config.php
 fi
-    echo "wp-config.php created successfully."
-else
-    echo "wp-config.php already exists."
-fi
+
+echo "Creating wp-config.php via wp-cli..."
+wp config create \
+  --dbname="$DB_NAME" \
+  --dbuser="$DB_USER" \
+  --dbpass="$DB_PASS" \
+  --dbhost="$DB_HOST" \
+  --path="/var/www/html" \
+  --skip-check \
+  --allow-root
+echo "wp-config.php created successfully."
+
+# echo "Testing database connection..."
+# if ! wp db check --allow-root --path="/var/www/html"; then
+#     echo "Failed to connect to database. Check credentials and try again."
+#     echo "DB_NAME: $DB_NAME"
+#     echo "DB_USER: $DB_USER"
+#     echo "DB_HOST: $DB_HOST"
+#     exit 1
+# fi
 
 echo "Checking if WordPress is installed..."
 if ! wp core is-installed --path="/var/www/html" --allow-root; then
