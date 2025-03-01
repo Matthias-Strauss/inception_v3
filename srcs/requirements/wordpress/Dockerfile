@@ -6,7 +6,7 @@
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/23 11:29:09 by mstrauss          #+#    #+#              #
-#    Updated: 2025/02/26 13:58:25 by mstrauss         ###   ########.fr        #
+#    Updated: 2025/02/26 17:34:38 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ FROM debian:bullseye
 RUN apt-get update && \
     apt-get install -y \
     php-fpm \
+    php-mysql \
     curl \
     php-mbstring \
     less \

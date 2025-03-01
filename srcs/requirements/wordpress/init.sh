@@ -21,7 +21,18 @@ SITE_URL=${DOMAIN_NAME:-"localhost"}
 WP_ROOT_USER=$(cat /run/secrets/wp_root_user)
 WP_ROOT_PASS=$(cat /run/secrets/wp_root_pass)
 
+
+echo "Waiting for MariaDB..."
+
+while ! mysqladmin ping -h"$WORDPRESS_DB_HOST" --silent 2>/dev/null; do
+  echo "Still waiting for database at $WORDPRESS_DB_HOST..."
+  sleep 3
+done
+echo "MariaDB is ready!"
+
+echo "Checking for wp-config.php..."
 if [ ! -f /var/www/html/wp-config.php ]; then
+    echo "Creating wp-config.php via wp-cli..."
     wp config create \
       --dbname="$DB_NAME" \
       --dbuser="$DB_USER" \
@@ -31,8 +42,14 @@ if [ ! -f /var/www/html/wp-config.php ]; then
       --skip-check \
       --allow-root
 fi
+    echo "wp-config.php created successfully."
+else
+    echo "wp-config.php already exists."
+fi
 
+echo "Checking if WordPress is installed..."
 if ! wp core is-installed --path="/var/www/html" --allow-root; then
+    echo "Installing WordPress core..."
     wp core install \
       --url="$SITE_URL" \
       --title="Inception" \
@@ -41,6 +58,11 @@ if ! wp core is-installed --path="/var/www/html" --allow-root; then
       --admin_email="mstrauss@student.42heilbronn.de" \
       --path="/var/www/html" \
       --allow-root
+    
+    echo "WordPress core installed successfully."
+else
+    echo "WordPress is already installed."
 fi
 
+echo "WordPress initialization complete. Starting PHP-FPM..."
 exec "$@"
