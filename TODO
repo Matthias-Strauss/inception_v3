@@ -1,0 +1,32 @@
+[ VM ]
+- setup VM
+- redirect localhost to mstrauss.42.fr                          !!!!!!!!!!!!!
+
+[ VOLUMES ]
+docker volume ls
+docker volume inspect inception_v3_db
+docker volume inspect inception_v3_wordpress
+
+-> fix to correct path => /home/login/data                      !!!!!!!!!!!!
+
+[ WORDPRESS ]
+- "ensure that you can ADD A COMMENT using the existing user credentials" ???????????
+
+
+[ MARIADB ]
+- "Demonstrate how to login to the database", try root with no pass.       !!!!!!!!!!!!
+        if login with root and no pass is possible -> fail
+
+# Get the container name/ID
+docker ps | grep mariadb
+
+# Connect to the MariaDB container (replace container_name with your actual container name)
+docker exec -it container_name bash
+
+# Once inside the container, connect to MariaDB with:
+mysql -u root -p
+# (You'll be prompted for the root password)
+
+# Or specify a different user:
+mysql -u username -p
+# (You'll be prompted for the user's password)

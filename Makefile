@@ -6,12 +6,15 @@
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/22 17:16:04 by mstrauss          #+#    #+#              #
-#    Updated: 2025/03/01 14:13:09 by mstrauss         ###   ########.fr        #
+#    Updated: 2025/03/02 14:25:47 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+build:
+	docker compose build
+
 up:
-	docker compose build && docker compose up
+	docker compose up
 	
 re: clean
 	docker compose down -v && docker compose build --no-cache && docker compose up

@@ -53,8 +53,6 @@ services:
       - db_pass
       - db_root_user
       - db_root_pass
-      - wp_root_user
-      - wp_root_pass
 
   mariadb:
     container_name: mariadb
@@ -73,9 +71,6 @@ services:
       - db_pass
       - db_root_user
       - db_root_pass
-      - wp_root_user
-      - wp_root_pass
-
 
 networks:
   inception:

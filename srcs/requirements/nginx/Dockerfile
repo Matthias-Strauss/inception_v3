@@ -6,7 +6,7 @@
 #    By: mstrauss <mstrauss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/22 17:49:40 by mstrauss          #+#    #+#              #
-#    Updated: 2025/03/01 17:22:34 by mstrauss         ###   ########.fr        #
+#    Updated: 2025/03/02 17:43:45 by mstrauss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,9 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -out /etc/ssl/certs/nginx-selfsigned.crt \
     -subj "/C=DE/ST=Baden-Wuerttemberg/L=Heilbronn/O=42Heilbronn/OU=Students/CN=42.fr"
 
-# ENTRYPOINT [ "executable" ]
-
 EXPOSE 443
 
-HEALTHCHECK --interval=30s --timeout=5s CMD curl -f https://${DOMAIN_NAME}/ || exit 1
+HEALTHCHECK --interval=30s --timeout=5s CMD curl -f -k https://localhost/ || exit 1
 
 COPY init.sh /
 RUN chmod +x /init.sh
