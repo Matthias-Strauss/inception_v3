@@ -10,11 +10,11 @@ docker volume inspect inception_v3_wordpress
 -> fix to correct path => /home/login/data                      !!!!!!!!!!!!
 
 [ WORDPRESS ]
-- "ensure that you can ADD A COMMENT using the existing user credentials" ???????????
+- "ensure that you can ADD A COMMENT using the existing user credentials" ??????????? FIXED
 
 
 [ MARIADB ]
-- "Demonstrate how to login to the database", try root with no pass.       !!!!!!!!!!!!
+- "Demonstrate how to login to the database", try root with no pass.       !!!!!!!!!!!! FIXED
         if login with root and no pass is possible -> fail
 
 # Get the container name/ID
