@@ -78,7 +78,15 @@ networks:
 
 volumes:
   db:
+    driver: local
+    driver_opts: 
+      device: /home/mstrauss/data/db
+      o: bind
   wordpress:
+    driver: local
+    driver_opts: 
+      device: /home/mstrauss/data/wp
+      o: bind
 
 secrets:
   db_name:
