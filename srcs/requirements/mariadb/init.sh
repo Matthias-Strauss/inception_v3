@@ -12,7 +12,7 @@
 #                                                                              #
 # **************************************************************************** #
 set -e
-set -x # DEBUG
+# set -x # DEBUG
 
 DB_ROOT_USER=$(cat /run/secrets/db_root_user)
 DB_ROOT_PASS=$(cat /run/secrets/db_root_pass)
@@ -58,7 +58,7 @@ fi
 echo "Shutting down MariaDB..."
 mysqladmin -u root -p${DB_ROOT_PASS} shutdown
 echo "MariaDB initialization completed successfully."
-set +x # DEBUG
+# set +x # DEBUG
 touch /var/lib/mysql/init_done.txt
 echo "Starting MariaDB server with command: $@"
 exec "$@"

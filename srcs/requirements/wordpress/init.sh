@@ -12,7 +12,7 @@
 # **************************************************************************** #
 
 set -e
-set -x # DEBUG
+# set -x # DEBUG
 
 DB_NAME=$(cat /run/secrets/db_name)
 DB_USER=$(cat /run/secrets/db_user)
@@ -99,5 +99,5 @@ fi
 
 echo "WordPress initialization complete. Starting PHP-FPM..."
 touch init_done.txt
-set +x # DEBUG
+# set +x # DEBUG
 exec "$@"
